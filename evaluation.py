@@ -7,15 +7,14 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import joblib
 
-# ==================== CONFIG ====================
 ticker          = "AAPL"
 SEQUENCE_LENGTH = 60
 HIDDEN_SIZE     = 50
 NUM_LAYERS      = 2
 DROPOUT         = 0.2
-# ================================================
 
-# -------- Rechargement données + scaler --------
+
+
 data   = pd.read_csv(f"{ticker}_historical.csv", skiprows=3,
                      names=["Date","Close","Volume"],
                      index_col="Date", parse_dates=True)
