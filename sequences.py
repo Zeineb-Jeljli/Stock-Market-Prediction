@@ -5,14 +5,14 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 
-# ==================== CONFIG ====================
+
 ticker = "AAPL"
 SEQUENCE_LENGTH = 60          # 60 jours pour prédire le jour suivant
-# ===============================================
 
-print(f"🚀 Chargement des données prétraitées pour {ticker}...")
 
-# Chargement du CSV du Jour 1
+print(f" Chargement des données prétraitées pour {ticker}...")
+
+
 # Chargement du CSV avec format multi-en-têtes yfinance
 data = pd.read_csv(
     f"{ticker}_historical.csv",
@@ -23,7 +23,7 @@ data = pd.read_csv(
 )
 prices = data['Close'].values.reshape(-1, 1)
 
-# Scaling (obligatoire pour LSTM)
+# Scaling
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_prices = scaler.fit_transform(prices)
 
@@ -36,7 +36,7 @@ for i in range(len(scaled_prices) - SEQUENCE_LENGTH):
 X = np.array(X)
 y = np.array(y)
 
-print(f"✅ Séquences créées ! Shape X: {X.shape} | Shape y: {y.shape}")
+print(f" Séquences créées ! Shape X: {X.shape} | Shape y: {y.shape}")
 
 # Split chronologique (80% train / 20% test)
 split = int(0.8 * len(X))
@@ -70,14 +70,14 @@ test_dataset  = StockDataset(X_test, y_test)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)  # shuffle=False pour time series
 test_loader  = DataLoader(test_dataset,  batch_size=32, shuffle=False)
 
-print("✅ DataLoaders prêts pour l'entraînement PyTorch !")
+print(" DataLoaders prêts pour l'entraînement PyTorch !")
 
 # Sauvegarde du scaler (on en aura besoin plus tard pour les prédictions)
 import joblib
 joblib.dump(scaler, f"{ticker}_scaler.pkl")
-print(f"✅ Scaler sauvegardé : {ticker}_scaler.pkl")
+print(f"Scaler sauvegardé : {ticker}_scaler.pkl")
 
-# Petit graphique des données scalées (optionnel mais beau)
+# Petit graphique des données scalées 
 plt.figure(figsize=(10, 5))
 plt.plot(scaled_prices, color='blue', label='Prix scalé')
 plt.title(f"Prix AAPL scalé (0-1)")
