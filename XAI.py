@@ -8,13 +8,12 @@ import shap
 import warnings
 warnings.filterwarnings("ignore")
 
-# ==================== CONFIG ====================
 ticker          = "AAPL"
 SEQUENCE_LENGTH = 60
 HIDDEN_SIZE     = 50
 NUM_LAYERS      = 2
 DROPOUT         = 0.2
-# ================================================
+
 
 # -------- Rechargement données --------
 data   = pd.read_csv(f"{ticker}_historical.csv", skiprows=3,
@@ -48,7 +47,6 @@ model.load_state_dict(torch.load(f"{ticker}_lstm.pth"))
 model.eval()
 
 # -------- Wrapper pour SHAP --------
-# SHAP a besoin d'une fonction qui prend un numpy array et retourne un numpy array
 def model_predict(X_np):
     X_tensor = torch.from_numpy(X_np.reshape(-1, SEQUENCE_LENGTH, 1)).float()
     with torch.no_grad():
@@ -69,7 +67,7 @@ shap_values = explainer.shap_values(to_explain, nsamples=100)
 print("Valeurs SHAP calculées !")
 
 # -------- Graphique 1 : Summary plot --------
-# Quels jours (features) influencent le plus globalement
+
 feature_names = [f"J-{SEQUENCE_LENGTH - i}" for i in range(SEQUENCE_LENGTH)]
 
 plt.figure(figsize=(10, 8))
@@ -88,7 +86,6 @@ plt.show()
 print(f"Graphique 1 sauvegardé : {ticker}_shap_summary.png")
 
 # -------- Graphique 2 : Waterfall pour 1 prédiction --------
-# On explique la première prédiction du test set
 print("\nExplication de la prédiction #1 du test set :")
 
 shap_exp = shap.Explanation(
