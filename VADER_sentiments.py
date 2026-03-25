@@ -4,9 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-# ==================== CONFIG ====================
 ticker = "AAPL"
-# ================================================
 
 analyzer = SentimentIntensityAnalyzer()
 
@@ -46,7 +44,7 @@ for article in news:
         color     = "gray"
 
     results.append({
-        "titre"    : title[:80],   # on tronque pour l'affichage
+        "titre"    : title[:80],  
         "compound" : compound,
         "sentiment": sentiment,
         "color"    : color
@@ -111,6 +109,5 @@ if results:
     plt.show()
     print(f"\nGraphique sauvegardé : {ticker}_sentiment.png")
 
-    # -------- Sauvegarde pour Jour 6 --------
     df.to_csv(f"{ticker}_sentiment.csv", index=False)
     print(f"Données sauvegardées : {ticker}_sentiment.csv")
