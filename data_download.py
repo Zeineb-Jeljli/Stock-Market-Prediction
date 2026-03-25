@@ -3,11 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# ==================== CHOISIS TON STOCK ICI ====================
-ticker = "AAPL"          # ← Tu peux mettre "TSLA", "NVDA", "GOOGL"...
-# ============================================================
+ticker = "AAPL"          
 
-print(f"🚀 Téléchargement des données {ticker} depuis 2015...")
+
+print(f" Téléchargement des données {ticker} depuis 2015...")
 
 data = yf.download(
     ticker,
@@ -33,5 +32,4 @@ plt.show()
 
 # Sauvegarde CSV (important pour les jours suivants)
 data.to_csv(f"{ticker}_historical.csv", index=True)
-print(f"\n✅ Fichier sauvegardé : {ticker}_historical.csv")
-print("🎉 Jour 1 terminé !")
+print(f"\n Fichier sauvegardé : {ticker}_historical.csv")
